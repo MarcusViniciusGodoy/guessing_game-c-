@@ -3,6 +3,9 @@
 #include <time.h>
 
 int main(){
+	printf("*******************************************\n");
+	printf("* Bem vindo ao nosso jogo de adivinhação! *\n");
+	printf("*******************************************\n");
 
 	int segundos = time(0);
 	srand(segundos);
@@ -13,12 +16,29 @@ int main(){
 	int palpite;
 	int tentativas = 1;
 	double pontos = 1000;
+	int acertou = 0;
 	
-	printf("*******************************************\n");
-	printf("* Bem vindo ao nosso jogo de adivinhação! *\n");
-	printf("*******************************************\n");
+	int nivel;
+	printf("Qual o nível de dificuldade?\n");
+	printf("(1) Fácil (2) Médio (3) Difícil\n\n");
+	printf("Escolha: ");
+	scanf("%d", &nivel);
 	
-	while(1){
+	int numero_tentativas;
+	
+	switch(nivel){
+		case 1:
+			numero_tentativas = 20;
+			break;
+		case 2:
+			numero_tentativas = 15;
+			break;
+		default:
+			numero_tentativas = 6;
+			break;
+	}
+	
+	for(int i=1; i<=numero_tentativas; i++){
 		printf("\n");
 		printf("Tentativa %d\n", tentativas);
 		printf("Qual é o seu palpite? ");
@@ -31,11 +51,10 @@ int main(){
 		}
 	
 	
-		int acertou = (palpite == numero_secreto);
+		acertou = (palpite == numero_secreto);
 		int menor = (palpite < numero_secreto);
 	
 		if(acertou){
-			printf("Parabéns! Você acertou.\n");
 			break;
 		}
 		else if(menor){
@@ -50,8 +69,16 @@ int main(){
 		double pontos_perdidos = abs(palpite - numero_secreto) / (double)2;
 		pontos = pontos - pontos_perdidos;
 	}
-	
 	printf("Fim de jogo!\n");
-	printf("Você acertou em %d tentativas!\n", tentativas);
-	printf("Total de pontos: %.1f\n", pontos);
+	
+	if (acertou){
+		printf("Você ganhou!\n");
+		printf("Você acertou em %d tentativas!\n", tentativas);
+		printf("Total de pontos: %.1f\n", pontos);
+	}else{
+		printf("Você perdeu! Tente novamente.\n");
+	}
+	
+	
+	
 }
